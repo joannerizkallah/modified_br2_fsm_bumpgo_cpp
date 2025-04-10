@@ -86,7 +86,7 @@ BumpGoNode::control_cycle()
       }
 
       break;
-    //uncomment this section to see the closed loop section
+    //uncomment this section to see the closed loop solution
     // case TURN:
     //   // let's change this state to turn to farthest/point or no obstacle
     //   //using closed-loop
@@ -130,18 +130,19 @@ bool
 BumpGoNode::check_forward_2_back()
 {
   // going forward when detecting an obstacle
-  // at 0.5 meters with the front laser read
-  size_t center = last_scan_->ranges.size() / 2;
-  size_t left_diagonal = (center/2);
-  size_t right_diagonal = (last_scan_->ranges.size()-1+center)/2;
+  // at 0.5 meters within -pi/4 and pi/4 range
+  size_t center = last_scan_->ranges.size() / 2; //get the center 
+  size_t left_diagonal = (center/2); //get the left diagonal which corresponds to pi/4
+  size_t right_diagonal = (last_scan_->ranges.size()-1+center)/2; //get right diagonal -pi/4
   for(int i = left_diagonal; i<=right_diagonal; i++){
-    if(last_scan_->ranges[i] < OBSTACLE_DISTANCE){
+    if(last_scan_->ranges[i] < OBSTACLE_DISTANCE){ //check within these ranges if we encountered an obstacle
         return true;
     }
     else{
       continue;
     }
   }
+  //another implementation could be checking for just 3 angles: 0, pi/4, -pi/4
   //return (last_scan_->ranges[center] < OBSTACLE_DISTANCE) || (last_scan_->ranges[left_diagonal] < OBSTACLE_DISTANCE) ||(last_scan_->ranges[right_diagonal] < OBSTACLE_DISTANCE) ;
   return false;
 }
@@ -192,21 +193,22 @@ BumpGoNode::check_back_2_turn()
 bool
 BumpGoNode::check_turn_2_forward()
 {
-  // Turning for whatever seconds
+  // Turning for the time precalculated to reach the farthest obstacle
   return (now() - state_ts_) > calculate_time();
 }
 
-
+//used for the open loop
 rclcpp::Duration
 BumpGoNode::calculate_time()
 {
-  //turn_time is calculated 
+  //time is calculated to reach the angle with the furthest obstacle (max range value)
   int max = 0;
   for(int i =1; i < last_scan_->ranges.size();i++){
     if(last_scan_->ranges[i]>last_scan_->ranges[max]){
       max = i;
     }
   }
+  //x = Vt, then t=x/V.
   float angle = max*last_scan_->angle_increment+last_scan_->angle_min;
   int turn_time = (angle)/SPEED_ANGULAR;
   return rclcpp::Duration{turn_time};
