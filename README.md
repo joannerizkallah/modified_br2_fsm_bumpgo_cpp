@@ -25,7 +25,7 @@ The robot will turn according to a specified direction variable turn_direction_ 
 Note that the turn_direction_ was calculated once when the go_state(TURN) was called for the robot to turn. For a shorter README, I added the go_state() method directly as a whole. To achieve the desired behavior,
 uncomment each section of go_state.
 
-![image](https://github.com/user-attachments/assets/747db8ef-7060-4304-89ea-d76ed2ba62e8)
+![image](https://github.com/user-attachments/assets/b4de81aa-551f-4bef-af81-66658f0c9aeb)
 
 The get_direction() will specify to turn +- SPEED_ANGULAR according to in which quadrant the obstacle was detected:
 ![image](https://github.com/user-attachments/assets/7885c607-533a-4a98-af37-249a157035bf)
@@ -60,10 +60,12 @@ For the closed loop implementation:
   ![image](https://github.com/user-attachments/assets/3ff098b8-d099-4f21-bcc6-1d4c5a902dd8)
 
 
-  The turn_direction_ is precalculated in the go_state() function using the calculate_speed(), which simply specifies the direction of the speed:
-  
-  ![image](https://github.com/user-attachments/assets/7bb6e477-2cd0-4075-a462-dfa4aa2c1849)
+  The turn_direction_ is precalculated in the go_state() function using the calculate_time_closedloop(), which simply specifies the time to reach the farthest obstacle:
+
+  ![image](https://github.com/user-attachments/assets/e3833a14-c345-49c1-ab4e-82dd523da2e4)
 
   , and the is_front_clear() will keep on checking whether the front is clear or not by checking whether the remaining_time_ has elapse:
+
+    ![image](https://github.com/user-attachments/assets/4090bbfd-0ed6-43e4-aa3e-7882f26aee5b)
 
   ![image](https://github.com/user-attachments/assets/8bf81af6-1d7f-4d0c-bb5c-b1fe0e94c904)
