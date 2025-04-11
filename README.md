@@ -27,6 +27,8 @@ uncomment each section of go_state.
 
 ![image](https://github.com/user-attachments/assets/747db8ef-7060-4304-89ea-d76ed2ba62e8)
 
+The get_direction() will specify to turn +- SPEED_ANGULAR according to in which quadrant the obstacle was detected:
+![image](https://github.com/user-attachments/assets/7885c607-533a-4a98-af37-249a157035bf)
 
 2.1 For the open loop implementation:
   My robot would turn for a precalculated amount of time based on the angle which has the farthest away osbtacle (by obtaining the index of the max value in ranges array and converting to the corresponding angle)   by using the formula x=vt -> t=x/v. thus, the robot turns until the time has elapsed. 
@@ -36,9 +38,7 @@ uncomment each section of go_state.
   The TURN state was updated to:
   ![image](https://github.com/user-attachments/assets/f93e5ad0-6a94-4a8f-a39d-2f59e530f6d5)
 
-  where the turn_direction_ is simply assigned +/- SPEED_ANGULAR at the go_state function (seen in a previous screenshot of the go_state() using the get_direction() function:
-
-  ![image](https://github.com/user-attachments/assets/7885c607-533a-4a98-af37-249a157035bf)
+  where the turn_direction_ is simply assigned +/- SPEED_ANGULAR at the go_state function (seen in a previous screenshot of the go_state() using the get_direction() function.
 
   The remaining_time_ is also calculated once the go_state function is called using the calculate_time() function, which would successfully time the robot to keep turning until the angle with the farthest obstacle
   is reached:
