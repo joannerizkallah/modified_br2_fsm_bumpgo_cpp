@@ -1,9 +1,7 @@
 # modified_br2_fsm_bumpgo_cpp
 
 In this assignment, I tried my best to meet the requirements, however vague they were:
-The appropriate changes were made to the header file by adding two new functions:
-  bool check_forward_2_turn();
-  bool is_front_clear();
+The appropriate changes were made to the header file and .cpp file.
   
 1. For detecting obstacles on the right and left diagonal, under the "check_forward_2_turn" the ranges array was traversed to check if there is an obstacle in a broader range. If yes, the robot would go back for 2 seconds and turn.
 
